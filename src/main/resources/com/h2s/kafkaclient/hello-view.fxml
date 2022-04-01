@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.h2s.kafkaclient.HelloController">
+    <left>
+        <VBox prefHeight="800.0" prefWidth="300.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label alignment="CENTER" prefHeight="115.0" prefWidth="299.0" text="Kafka Clients">
+                    <font>
+                        <Font name="SansSerif Bold" size="39.0" />
+                    </font>
+                </Label>
+                <AnchorPane prefHeight="163.0" prefWidth="299.0">
+                    <children>
+                        <Label fx:id="detailInformation" layoutX="8.0" layoutY="122.0" prefHeight="25.0" prefWidth="140.0" text="Thông tin" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0">
+                            <font>
+                                <Font name="Arial Bold" size="13.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </AnchorPane>
+                <HBox prefHeight="35.0" prefWidth="297.0">
+                    <children>
+                        <Label alignment="CENTER" prefHeight="35.0" prefWidth="95.0" text="Broker" />
+                        <TextField fx:id="brokerId" prefHeight="35.0" prefWidth="204.0" />
+                    </children>
+                </HBox>
+                <HBox prefHeight="35.0" prefWidth="297.0">
+                    <children>
+                        <Label alignment="CENTER" prefHeight="35.0" prefWidth="95.0" text="Group id" />
+                        <TextField fx:id="groupId" prefHeight="35.0" prefWidth="204.0">
+                            <HBox.margin>
+                                <Insets />
+                            </HBox.margin>
+                        </TextField>
+                    </children>
+                    <VBox.margin>
+                        <Insets top="10.0" />
+                    </VBox.margin>
+                </HBox>
+                <Pane prefHeight="69.0" prefWidth="299.0">
+                    <children>
+                        <ProgressIndicator fx:id="processCircle" layoutX="21.0" layoutY="16.0" prefHeight="41.0" prefWidth="141.0" />
+                        <Button fx:id="connect" layoutX="92.0" layoutY="22.0" mnemonicParsing="false" onAction="#onClick" prefHeight="30.0" prefWidth="208.0" style="-fx-background-color: #347cf8;" text="Kết nối" textFill="WHITE" />
+                    </children>
+                </Pane>
+                <ComboBox fx:id="topicComboBox" onAction="#choiceTopic" prefHeight="31.0" prefWidth="278.0">
+                    <VBox.margin>
+                        <Insets left="20.0" />
+                    </VBox.margin>
+                </ComboBox>
+                <AnchorPane prefHeight="322.0" prefWidth="305.0">
+                    <children>
+                  <Circle fx:id="pingServerStt" fill="#287ffa" layoutX="276.0" layoutY="297.0" radius="10.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" />
+                  <Label layoutX="160.0" layoutY="283.0" prefHeight="29.0" prefWidth="106.0" text="Trạng thái kết nối" />
+                    </children>
+                </AnchorPane>
+            </children>
+        </VBox>
+    </left>
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Close" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Delete" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    <center>
+        <TableView fx:id="tableView" prefHeight="200.0" prefWidth="200.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="partition" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Partition" />
+                <TableColumn fx:id="value" prefWidth="558.0" text="Value" />
+                <TableColumn fx:id="timestamp" maxWidth="200.0" minWidth="200.0" prefWidth="200.0" text="Time" />
+                <TableColumn fx:id="offset" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Offset" />
+            </columns>
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+            </columnResizePolicy>
+            <cursor>
+                <Cursor fx:constant="DEFAULT" />
+            </cursor>
+            <BorderPane.margin>
+                <Insets left="10.0" />
+            </BorderPane.margin>
+        </TableView>
+    </center>
+</BorderPane>
