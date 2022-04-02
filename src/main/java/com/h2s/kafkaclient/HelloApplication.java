@@ -25,18 +25,6 @@ public class HelloApplication extends Application {
         HelloController controller =(HelloController) fxmlLoader.getController();
         controller.stopService(stage);
         stage.show();
-
-        try {
-            FXMLLoader fxmlLoader1 = new FXMLLoader(HelloApplication.class.getResource("init-view.fxml"));
-            Parent parent = (Parent) fxmlLoader1.load();
-            Stage s = new Stage();
-            s.initStyle(StageStyle.DECORATED);
-            s.setTitle("Choose a connection");
-            s.setScene(new Scene(parent));
-            s.show();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
     }
 
     @FXML

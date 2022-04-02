@@ -7,6 +7,7 @@ module com.h2s.kafkaclient {
     requires com.dlsc.formsfx;
     requires org.kordamp.bootstrapfx.core;
     requires kafka.clients;
+    requires com.fasterxml.jackson.databind;
 
     opens com.h2s.kafkaclient to javafx.fxml;
     exports com.h2s.kafkaclient;

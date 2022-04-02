@@ -1,5 +1,6 @@
 package com.h2s.kafkaclient.controller;
 
+import com.h2s.kafkaclient.BrokerSettingModel;
 import com.h2s.kafkaclient.HelloApplication;
 import com.h2s.kafkaclient.concurrency.KafkaConsumerRunner;
 import com.h2s.kafkaclient.model.ConsumerModel;
@@ -19,12 +20,15 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -34,11 +38,16 @@ import java.util.Set;
 import java.util.Vector;
 import java.util.stream.Collectors;
 
+import static com.h2s.kafkaclient.BrokerSettingModel.writeSetting;
+
 public class HelloController implements Initializable {
     @FXML
-    private TextField brokerId;
+    BorderPane bp;
+
     @FXML
-    private TextField groupId;
+    private TextField brokerId = new TextField();
+    @FXML
+    private TextField groupId = new TextField();
 
     @FXML
     private ProgressIndicator processCircle;
@@ -79,9 +88,9 @@ public class HelloController implements Initializable {
     private Set<String> topicList;
 
     private void init() {
-        brokerId.setText("10.1.16.247:9092,10.1.16.248:9092,10.1.16.249:9092");
-        groupId.setText("bpm");
         topicListView.setItems(null);
+        groupId.setText("");
+        brokerId.setText("");
         processCircle.setVisible(false);
         pingServerStt.setFill(javafx.scene.paint.Color.rgb(255,0,0));
 
@@ -100,7 +109,7 @@ public class HelloController implements Initializable {
     public void onClick(ActionEvent actionEvent) {
         processCircle.setVisible(true);
         ConsumerModel consumerModel = new ConsumerModel("", groupId.getText(), brokerId.getText());
-
+        System.out.println("groupId: " + groupId.getText());
         //Creating consumer properties
         properties = new Properties();
         properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, consumerModel.getBrokerIp());
@@ -124,13 +133,19 @@ public class HelloController implements Initializable {
         timestamp.setCellValueFactory(new PropertyValueFactory<RecordModel, String>("timestamp"));
         tableView.setItems(records);
         init();
-
+        try {
+            ConsumerModel var1 = InitController.display();
+            fillSetting(var1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void choiceTopic(MouseEvent arg0) {
+    public void choiceTopic(MouseEvent arg0) throws IOException {
         if(arg0.getButton().equals(MouseButton.PRIMARY)){
             if(arg0.getClickCount() == 2){
                 String topic = topicListView.getSelectionModel().getSelectedItems().get(0);
+                writeSetting(new BrokerSettingModel(brokerId.getText(), groupId.getText(), topic));
                 String threadName = Common.getNameThreadTopic(topic);
                 if(thread.isEmpty()) {
                     KafkaConsumerRunner kafkaConsumerRunner = new KafkaConsumerRunner(topic, properties, records, processCircle);
@@ -155,6 +170,11 @@ public class HelloController implements Initializable {
         }
     }
 
+    public void fillSetting(ConsumerModel p_consumerModel) {
+        groupId.setText(p_consumerModel.getGroupId());
+        brokerId.setText(p_consumerModel.getBrokerIp());
+    }
+
     public void stopService(Stage stage) {
         stage.setOnHiding(event -> {
             if(thread != null) {
@@ -167,5 +187,14 @@ public class HelloController implements Initializable {
                 }
             }
         });
+    }
+
+    public void show(ActionEvent actionEvent) {
+        try {
+            ConsumerModel var1 = InitController.display();
+            fillSetting(var1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
