@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.h2s.kafkaclient.constant.Settings;
 import com.h2s.kafkaclient.model.ConsumerModel;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -96,6 +98,27 @@ public class BrokerSettingModel {
             ObjectMapper mapper = new ObjectMapper();
             settingModels = mapper.readValue(Paths.get(Settings.CONFIG_FILE_PATH).toFile(), new TypeReference<>() {});
         } catch (Exception ex) {
+            // new file
+            try {
+                File myObj = new File(Settings.CONFIG_FILE_PATH);
+                if (myObj.createNewFile()) {
+                    try {
+                        FileWriter myWriter = new FileWriter(Settings.CONFIG_FILE_PATH);
+                        myWriter.write("[]");
+                        myWriter.close();
+                        System.out.println("Successfully wrote to the file.");
+                    } catch (IOException e) {
+                        System.out.println("An error occurred.");
+                        e.printStackTrace();
+                    }
+                    System.out.println("File created: " + myObj.getName());
+                } else {
+                    System.out.println("File already exists.");
+                }
+            } catch (IOException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+            }
             ex.printStackTrace();
         }
         return settingModels;
