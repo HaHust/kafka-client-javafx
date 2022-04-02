@@ -1,22 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.h2s.kafkaclient.HelloController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.h2s.kafkaclient.controller.HelloController">
     <left>
         <VBox prefHeight="800.0" prefWidth="300.0" BorderPane.alignment="CENTER">
             <children>
-                <Label alignment="CENTER" prefHeight="115.0" prefWidth="299.0" text="Kafka Clients">
+                <Label alignment="CENTER" prefHeight="100.0" prefWidth="299.0" text="Kafka Clients">
                     <font>
                         <Font name="SansSerif Bold" size="39.0" />
                     </font>
                 </Label>
-                <AnchorPane prefHeight="163.0" prefWidth="299.0">
+                <AnchorPane prefHeight="32.0" prefWidth="300.0">
                     <children>
                         <Label fx:id="detailInformation" layoutX="8.0" layoutY="122.0" prefHeight="25.0" prefWidth="140.0" text="Thông tin" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0">
                             <font>
@@ -50,15 +65,17 @@
                         <Button fx:id="connect" layoutX="92.0" layoutY="22.0" mnemonicParsing="false" onAction="#onClick" prefHeight="30.0" prefWidth="208.0" style="-fx-background-color: #347cf8;" text="Kết nối" textFill="WHITE" />
                     </children>
                 </Pane>
-                <ComboBox fx:id="topicComboBox" onAction="#choiceTopic" prefHeight="31.0" prefWidth="278.0">
-                    <VBox.margin>
-                        <Insets left="20.0" />
-                    </VBox.margin>
-                </ComboBox>
-                <AnchorPane prefHeight="322.0" prefWidth="305.0">
+                <AnchorPane prefHeight="467.0" prefWidth="300.0">
                     <children>
-                  <Circle fx:id="pingServerStt" fill="#287ffa" layoutX="276.0" layoutY="297.0" radius="10.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" />
-                  <Label layoutX="160.0" layoutY="283.0" prefHeight="29.0" prefWidth="106.0" text="Trạng thái kết nối" />
+                  <Circle fx:id="pingServerStt" fill="#287ffa" layoutX="276.0" layoutY="297.0" radius="10.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="0.0" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+                  <Label layoutX="164.0" layoutY="433.0" prefHeight="29.0" prefWidth="106.0" text="Trạng thái kết nối" AnchorPane.bottomAnchor="5.0" />
+                  <ListView fx:id="topicListView" layoutX="18.0" layoutY="46.0" onMouseClicked="#choiceTopic" prefHeight="381.0" prefWidth="277.0" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="46.0" />
+                  <TextField fx:id="searchTopic" layoutX="20.0" layoutY="21.0" prefHeight="25.0" prefWidth="237.0" AnchorPane.topAnchor="10.0" />
+                  <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="265.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="10.0">
+                     <image>
+                        <Image url="@../../../asset/image/500px-Search_Icon.svg.png" />
+                     </image>
+                  </ImageView>
                     </children>
                 </AnchorPane>
             </children>
@@ -86,7 +103,7 @@
         </MenuBar>
     </top>
     <center>
-        <TableView fx:id="tableView" prefHeight="200.0" prefWidth="200.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
+        <TableView fx:id="tableView" prefHeight="851.0" prefWidth="935.0" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
             <columns>
                 <TableColumn fx:id="partition" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Partition" />
                 <TableColumn fx:id="value" prefWidth="558.0" text="Value" />

@@ -1,14 +1,15 @@
 package com.h2s.kafkaclient;
 
+import com.h2s.kafkaclient.controller.HelloController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
@@ -24,6 +25,18 @@ public class HelloApplication extends Application {
         HelloController controller =(HelloController) fxmlLoader.getController();
         controller.stopService(stage);
         stage.show();
+
+        try {
+            FXMLLoader fxmlLoader1 = new FXMLLoader(HelloApplication.class.getResource("init-view.fxml"));
+            Parent parent = (Parent) fxmlLoader1.load();
+            Stage s = new Stage();
+            s.initStyle(StageStyle.DECORATED);
+            s.setTitle("Choose a connection");
+            s.setScene(new Scene(parent));
+            s.show();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     @FXML

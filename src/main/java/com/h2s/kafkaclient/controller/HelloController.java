@@ -1,5 +1,6 @@
-package com.h2s.kafkaclient;
+package com.h2s.kafkaclient.controller;
 
+import com.h2s.kafkaclient.HelloApplication;
 import com.h2s.kafkaclient.concurrency.KafkaConsumerRunner;
 import com.h2s.kafkaclient.model.ConsumerModel;
 import com.h2s.kafkaclient.model.RecordModel;
@@ -10,13 +11,17 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
@@ -89,6 +94,7 @@ public class HelloController implements Initializable {
             Set<String> result = topicList.stream().filter(item -> item.contains(newValue)).sorted(String.CASE_INSENSITIVE_ORDER).collect(Collectors.toCollection(LinkedHashSet::new));
             topicListView.setItems(FXCollections.observableArrayList(result));
         });
+
     }
 
     public void onClick(ActionEvent actionEvent) {
@@ -116,9 +122,9 @@ public class HelloController implements Initializable {
         partition.setCellValueFactory(new PropertyValueFactory<RecordModel, String>("partition"));
         offset.setCellValueFactory(new PropertyValueFactory<RecordModel, String>("offset"));
         timestamp.setCellValueFactory(new PropertyValueFactory<RecordModel, String>("timestamp"));
-
         tableView.setItems(records);
         init();
+
     }
 
     public void choiceTopic(MouseEvent arg0) {

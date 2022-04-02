@@ -1,0 +1,21 @@
+
+   .list-view .list-cell,
+   .list-view .list-cell:filled,
+   .list-view .list-cell:selected,
+   .list-view .list-cell:focused,
+   .list-view .list-cell:hover {
+       -fx-background-color: transparent;
+       -fx-effect: null;
+   }
+
+
+   .list-view .list-cell:hover .email-view {
+       -fx-background-color: greenyellow;
+   }
+
+   .list-view .list-cell:filled:selected:focused .email-view,
+   .list-view .list-cell:filled:selected .email-view {
+       background-color: green;
+   }
+
+   .email-view { -fx-background-color: gray; }

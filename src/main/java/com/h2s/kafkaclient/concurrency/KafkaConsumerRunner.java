@@ -43,13 +43,12 @@ public class KafkaConsumerRunner implements Runnable {
         // Consume Kafka Message
         while (true) {
             try {
-                ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(10));
+                ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
                 for (ConsumerRecord<String, String> it : records) {
-                    record.add(new RecordModel( String.valueOf(it.partition()), String.valueOf(it.offset()), String.valueOf(new Date(it.timestamp())), it.value()));
+                    record.add(new RecordModel(String.valueOf(it.partition()), String.valueOf(it.offset()), String.valueOf(new Date(it.timestamp())), it.value()));
                     progressIndicator.setVisible(false);
+                    consumer.commitAsync();
                 }
-                consumer.commitSync();
-
             } catch (Exception e) {
                 e.printStackTrace();
                 this.isConnected.set(false);
